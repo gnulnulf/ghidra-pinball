@@ -23,6 +23,7 @@ from ghidra.program.model.listing.Listing import *
 
 minAddress = currentProgram.getMinAddress()
 listing = currentProgram.getListing()
+
 codeUnit = listing.getCodeUnitAt(minAddress)
 codeUnit.setComment(codeUnit.PLATE_COMMENT, "AddCommentToProgramScript - This is an added comment!")
 
@@ -53,17 +54,17 @@ pia(0x3400,"PIA_U42","DISPLAY/WIDGET")
 pia(0x2800,"PIA_U51","DISPLAY")
 pia(0x2400,"PIA_U54","LAMPS")
 
-createData(toAddr(0xFFF8), PointerDataType() )
-createData(toAddr(0xFFFA), PointerDataType() )
-createData(toAddr(0xFFFC), PointerDataType() )
-createData(toAddr(0xFFFE), PointerDataType() )
+listing.createData(toAddr(0xFFF8), PointerDataType() )
+listing.createData(toAddr(0xFFFA), PointerDataType() )
+listing.createData(toAddr(0xFFFC), PointerDataType() )
+listing.createData(toAddr(0xFFFE), PointerDataType() )
 
-irq_addr= reset_addr= (memory.getShort(toAddr(0xFFF8)) & 0xffff )
-swi_addr= reset_addr= (memory.getShort(toAddr(0xFFFA)) & 0xffff )
-nmi_addr= reset_addr= (memory.getShort(toAddr(0xFFFC)) & 0xffff )
-reset_addr= reset_addr= (memory.getShort(toAddr(0xFFFE)) & 0xffff )
+irq_addr=(memory.getShort(toAddr(0xFFF8)) & 0xffff )
+swi_addr= (memory.getShort(toAddr(0xFFFA)) & 0xffff )
+nmi_addr=(memory.getShort(toAddr(0xFFFC)) & 0xffff )
+reset_addr=(memory.getShort(toAddr(0xFFFE)) & 0xffff )
 
-createFunction(toAddr(reset_addr),"FUN_RESET")
+listing.createFunction(toAddr(reset_addr),"FUN_RESET",false)
 createFunction(toAddr(irq_addr),"FUN_IRQ")
 createFunction(toAddr(swi_addr),"FUN_SWI")
 createFunction(toAddr(nmi_addr),"FUN_NMI")
